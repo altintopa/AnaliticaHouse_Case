@@ -33,9 +33,8 @@ extension PokemonRouter: PokemonRoutingLogic {
       case .toDetails:
           let destinationVC = UIStoryboard.init(name: "PokemonDetails", bundle: Bundle.main).instantiateViewController(withIdentifier: "PokemonDetails") as? PokemonDetailsViewController
           let destinationDS = destinationVC?.router?.dataStore
-          //destinationDS?.pokemonDetails = viewController?.pokemonItemData
-          destinationDS?.pokemonDetails = viewController?.pokemonAbility.first   /// tek satır bilgi geldiği için . . .
-          destinationDS?.pokemonItemData = viewController?.pokemonItemData[self.viewController?.selecetedIndex ?? 0]
+          destinationDS?.pokemonDetails = viewController?.pokemonAbility
+          destinationDS?.pokemonItemData = viewController?.pokemons[self.viewController?.selecetedIndex ?? 0]
           self.viewController?.present(destinationVC!, animated: true)
           
       }

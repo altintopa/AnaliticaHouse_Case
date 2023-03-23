@@ -22,7 +22,7 @@ class PokemonTableViewCell: UITableViewCell {
     }
     
     func setup(name:String, imageUrl:String){
-        lblPokemonName.text = name
+        lblPokemonName.text = name.uppercased()
         pokemonImgView.load(url: URL(string: imageUrl)!)
         
     }

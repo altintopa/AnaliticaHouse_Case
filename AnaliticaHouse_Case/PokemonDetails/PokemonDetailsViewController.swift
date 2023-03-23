@@ -25,9 +25,7 @@ class PokemonDetailsViewController: UIViewController {
     
     // MARK: - Public Properties -
     
-    var pokee: PokemonDetails.pokeDetailModel?
-    var pokemonDetails:[PokemonAbilityModel] = []
-    var pokemonItemData: [PokemonItemModel] = []
+    var pokemonData: PokemonDetails.PokemonDetailDataModel?
     
     var interactor: PokemonDetailsBusinessLogic?
     var router: (NSObjectProtocol & PokemonDetailsRoutingLogic & PokemonDetailsDataPassing)?
@@ -74,16 +72,17 @@ class PokemonDetailsViewController: UIViewController {
     // MARK: - Helpers -
     
     private func prepareViews() {
+        
     }
     private func showData(){
         
-        lblName.text = pokee?.name
-        lblEffect.text = pokee?.effect
-        lblShortEffect.text = pokee?.shortEffect
-        lblGeneration.text = pokee?.generation
-        pokemonImgView.load(url: URL(string: pokee?.image ?? "")!)
-        lblHeight.text = pokee?.height
-        lblWeight.text = pokee?.weight
+        lblName.text = pokemonData?.name.uppercased()
+        lblEffect.text = pokemonData?.effect
+        lblShortEffect.text = pokemonData?.shortEffect
+        lblGeneration.text = pokemonData?.generation
+        pokemonImgView.load(url: URL(string: pokemonData?.image ?? "")!)
+        lblHeight.text = pokemonData?.height
+        lblWeight.text = pokemonData?.weight
         
     }
     
@@ -94,7 +93,7 @@ class PokemonDetailsViewController: UIViewController {
 
 extension PokemonDetailsViewController: PokemonDetailsDisplayLogic {
     func displayPokemonDetails(viewModel: PokemonDetails.PokemonDetailsModel.ViewModel) {
-        self.pokee = viewModel.pokemonDetailsData.first!
+        self.pokemonData = viewModel.pokemonDetailsData.first!
         self.showData()
     }
 }

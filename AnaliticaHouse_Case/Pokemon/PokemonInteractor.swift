@@ -10,6 +10,7 @@ import Foundation
 
 protocol PokemonBusinessLogic: AnyObject { 
     func viewDidLoad()
+    func getPokemonDetail(url:String)
 }
 
 protocol PokemonDataStore: AnyObject { }
@@ -26,6 +27,10 @@ extension PokemonInteractor: PokemonBusinessLogic, PokemonDataStore {
     func viewDidLoad() {
         self.getPokemonAllData()
     }
+    
+    func getPokemonDetail(url: String) {
+        self.getPokemonDetails(url: url)
+    }
 }
 
 extension PokemonInteractor {
@@ -35,6 +40,7 @@ extension PokemonInteractor {
                 self.worker.getPokemonItemData(url: result.url, completion: { PokeItemModel in
                     self.pokemonData.append(PokeItemModel)
                     DispatchQueue.main.async {
+                        /// Bu kısımda for döngüsünden çıkmak için if sorgusu yazıldı . .
                         if self.pokemonData.count == 20 {
                             let response = Pokemon.PokemonList.Response(response: self.pokemonData)
                             self.presenter?.presentPokemons(response: response)
@@ -43,5 +49,13 @@ extension PokemonInteractor {
                 })
             }
         })
+    }
+    
+    private func getPokemonDetails(url: String){
+        self.worker.getPokemonDetails(url: url) { PokeAbility in
+            DispatchQueue.main.async {
+                self.presenter?.toDetails(pokemonDetails: PokeAbility)
+            }
+        }
     }
 }

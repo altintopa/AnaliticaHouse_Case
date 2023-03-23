@@ -10,6 +10,7 @@ import Foundation
 
 protocol PokemonPresentationLogic: AnyObject {
     func presentPokemons(response: Pokemon.PokemonList.Response)
+    func toDetails(pokemonDetails: PokemonAbilityModel)
 }
 
 class PokemonPresenter {
@@ -22,11 +23,17 @@ class PokemonPresenter {
 extension PokemonPresenter: PokemonPresentationLogic {
     func presentPokemons(response: Pokemon.PokemonList.Response) {
         let responseArray = response.response
+        
         for item in responseArray {
-            pokemonList.append(Pokemon.PokemonListModel(name: item.name, image: item.sprites.frontDefault, abilityUrl: item.abilities[0].ability.url))
+            pokemonList.append(Pokemon.PokemonListModel(name: item.name, image: item.sprites.frontDefault, abilityUrl: item.abilities[0].ability.url, weight: item.weight, height: item.height))
         }
+        
         let viewModel = Pokemon.PokemonList.ViewModel(viewModel: pokemonList)
         self.viewController?.displayPokemons(viewModel: viewModel)
-        
+    }
+    
+    func toDetails(pokemonDetails: PokemonAbilityModel) {
+        let toDetailsData = pokemonDetails
+        self.viewController?.routeToDetails(toDetails: Pokemon.PokemonList.RouteToDetails(toDetailsModel: toDetailsData))
     }
 }

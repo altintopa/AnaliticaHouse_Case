@@ -21,19 +21,24 @@ class PokemonDetailsPresenter {
 extension PokemonDetailsPresenter: PokemonDetailsPresentationLogic {
     func presentPokemonDetails(response: PokemonDetails.PokemonDetailsModel.Response) {
         let name = response.pokemonItem.name
-        let image = "\(response.pokemonItem.sprites.frontDefault)"
+        let image = "\(response.pokemonItem.image)"
         let weight = "\(response.pokemonItem.weight)"
         let height = "\(response.pokemonItem.height)"
-//        let effect = response.pokemonDetails[0].effectEntries[1].effect
-//        let shortEffect = response.pokemonDetails[0].effectEntries[1].shortEffect
-//        let generation = "\(response.pokemonDetails[0].generation.name)"
-        let effect = response.pokemonDetails.effectEntries[1].effect
-        let shortEffect = response.pokemonDetails.effectEntries[1].shortEffect
-        let generation = "\(response.pokemonDetails.generation.name)"
-        var arr: [PokemonDetails.pokeDetailModel] = []
-        arr.append(PokemonDetails.pokeDetailModel(name: name, image: image, effect: effect, shortEffect: shortEffect, generation: generation, weight: weight, height: height))
+        var effect = ""
+        var shortEffect = ""
         
-//        let viewModel = PokemonDetails.PokemonDetailsModel.ViewModel(pokemonDetailsData: PokemonDetails.pokeDetailModel.init(name: name, image: image, effect: effect, shortEffect: shortEffect, generation: generation, weight: weight, height: height))
+        /// Bu kısımda gelen değerler almanca değilde ingilizce gelsin diye bu şekilde yapıldı. . .
+        if response.pokemonDetails.effectEntries[0].language.name == "en" {
+            effect = response.pokemonDetails.effectEntries[0].effect
+            shortEffect = response.pokemonDetails.effectEntries[0].shortEffect
+        }else {
+            effect = response.pokemonDetails.effectEntries[1].effect
+            shortEffect = response.pokemonDetails.effectEntries[1].shortEffect
+        }
+        
+        let generation = "\(response.pokemonDetails.generation.name)"
+        var arr: [PokemonDetails.PokemonDetailDataModel] = []
+        arr.append(PokemonDetails.PokemonDetailDataModel(name: name, image: image, effect: effect, shortEffect: shortEffect, generation: generation, weight: weight, height: height))
         
         let viewModel = PokemonDetails.PokemonDetailsModel.ViewModel(pokemonDetailsData: arr)
         

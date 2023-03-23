@@ -10,7 +10,8 @@ import Foundation
 
 enum PokemonDetails {
   // MARK: - Use cases -
-    struct pokeDetailModel {
+    
+    struct PokemonDetailDataModel {
         var name: String
         var image: String
         var effect: String
@@ -27,11 +28,11 @@ enum PokemonDetails {
 
     struct Response {
         var pokemonDetails: PokemonAbilityModel
-        var pokemonItem: PokemonItemModel
+        var pokemonItem: Pokemon.PokemonListModel
     }
 
     struct ViewModel {
-        var pokemonDetailsData: [pokeDetailModel] = []
+        var pokemonDetailsData: [PokemonDetailDataModel] = []
     }
   }
 }

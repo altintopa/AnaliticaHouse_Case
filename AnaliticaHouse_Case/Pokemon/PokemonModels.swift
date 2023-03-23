@@ -9,24 +9,29 @@
 import Foundation
 
 enum Pokemon {
-  // MARK: - Use cases -
+    // MARK: - Use cases -
     struct PokemonListModel{
         var name:String
         var image: String
         var abilityUrl: String
+        var weight: Int
+        var height: Int
     }
     
-  enum PokemonList {
-    struct Request { 
-
+    enum PokemonList {
+        struct Request {
+            
+        }
+        
+        struct Response {
+            var response: [PokemonItemModel] = []
+        }
+        
+        struct ViewModel {
+            var viewModel: [PokemonListModel] = []
+        }
+        struct RouteToDetails {
+            var toDetailsModel: PokemonAbilityModel
+        }
     }
-
-    struct Response {
-        var response: [PokemonItemModel] = []
-    }
-
-    struct ViewModel {
-        var viewModel: [PokemonListModel] = []
-    }
-  }
 }

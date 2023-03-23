@@ -30,7 +30,6 @@ class PokemonWorker {
         task.resume()
     }
     
-    
     func getPokemonItemData(url: String, completion: @escaping (PokemonItemModel) -> Void) {
         guard let url = URL(string: url) else {return}
         let session = URLSession.shared
@@ -51,4 +50,24 @@ class PokemonWorker {
         task.resume()
     }
     
+    
+    func getPokemonDetails(url: String, completion: @escaping (PokemonAbilityModel) -> Void) {
+        guard let url = URL(string: url) else {return}
+        let session = URLSession.shared
+        
+        let task = session.dataTask(with: url) { (data, response, error) in
+            if error != nil {
+                print("ERROR !")
+            }
+            guard let data = data else {return}
+            
+            do {
+                let result = try JSONDecoder().decode(PokemonAbilityModel.self, from: data)
+                completion(result)
+            } catch {
+                print("Something Wrong !")
+            }
+        }
+        task.resume()
+    }
 }

@@ -14,14 +14,15 @@ protocol PokemonDetailsBusinessLogic: AnyObject {
 
 protocol PokemonDetailsDataStore: AnyObject {
     var pokemonDetails: PokemonAbilityModel! {get set}
-    var pokemonItemData: PokemonItemModel! {get set}
+    //var pokemonItemData: PokemonItemModel! {get set}
+    var pokemonItemData: Pokemon.PokemonListModel! {get set}
 }
 
 class PokemonDetailsInteractor {
     var presenter: PokemonDetailsPresentationLogic?
     var worker: PokemonDetailsWorker?
     var pokemonDetails: PokemonAbilityModel!
-    var pokemonItemData: PokemonItemModel!
+    var pokemonItemData: Pokemon.PokemonListModel!
 }
 
 // MARK: - PokemonDetailsBusinessLogic -

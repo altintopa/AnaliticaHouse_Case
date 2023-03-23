@@ -7,16 +7,6 @@
 
 import Foundation
 
-//struct PokemonResponseModel: Codable {
-//    var count: Int
-//    var results: [PokemonModel]
-//}
-//
-//struct PokemonModel: Codable {
-//    var name: String
-//    var url: String
-//}
-
 struct PokemonResponseModel: Codable {
     var count: Int
     var next: String
