@@ -1,0 +1,47 @@
+//
+//  PokemonInteractor.swift
+//  AnaliticaHouse_Case
+//
+//  Created by Ahmet ALTINTOP on 22.03.2023.
+//  Copyright (c) 2023 ___ORGANIZATIONNAME___. All rights reserved.
+//
+
+import Foundation
+
+protocol PokemonBusinessLogic: AnyObject { 
+    func viewDidLoad()
+}
+
+protocol PokemonDataStore: AnyObject { }
+
+class PokemonInteractor {
+    var presenter: PokemonPresentationLogic?
+    var worker = PokemonWorker()
+    var pokemonData: [PokemonItemModel] = []
+}
+
+// MARK: - PokemonBusinessLogic -
+
+extension PokemonInteractor: PokemonBusinessLogic, PokemonDataStore { 
+    func viewDidLoad() {
+        self.getPokemonAllData()
+    }
+}
+
+extension PokemonInteractor {
+    private func getPokemonAllData(){
+        self.worker.getPokemonData(completion: { PokeModel in
+            for result in PokeModel {
+                self.worker.getPokemonItemData(url: result.url, completion: { PokeItemModel in
+                    self.pokemonData.append(PokeItemModel)
+                    DispatchQueue.main.async {
+                        if self.pokemonData.count == 20 {
+                            let response = Pokemon.PokemonList.Response(response: self.pokemonData)
+                            self.presenter?.presentPokemons(response: response)
+                        }
+                    }
+                })
+            }
+        })
+    }
+}
